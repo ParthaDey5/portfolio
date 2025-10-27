@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import External from "..//assets/images/external-link.svg?react";
 import Github from "..//assets/images/github.svg?react";
 

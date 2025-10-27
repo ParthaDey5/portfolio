@@ -1,6 +1,11 @@
-import React from 'react'
 
-export default function ThemeToggleBtn({darkMode,setDarkMode}) {
+type ThemeToggleBtnProps = {
+  darkMode: boolean;
+  setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+
+export default function ThemeToggleBtn({ darkMode, setDarkMode }: ThemeToggleBtnProps) {
   return (
     <div
         onClick={() => {
