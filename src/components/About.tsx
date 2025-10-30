@@ -28,7 +28,7 @@ const About: React.FC = () => {
         <div className="flex desktop:flex-row flex-col items-center desktop:justify-between justify-center">
           <div className="md:w-1/2 mb-[7vw] desktop::mb-0">
             <animated.img
-              src="/PD2.jpg"
+              src="/PD2.png"
               alt="Profile Picture"
               className="shadow-xl rounded-full desktop:w-[20vw] w-[60vw] aspect-square object-cover mx-auto"
               style={fadeIn as { [key: string]: SpringValue<string | number> }}
