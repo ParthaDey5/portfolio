@@ -58,10 +58,10 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <section className="!max-w-screen overflow-x-hidden">
+    <section className="transition-colors duration-300 ease-in">
       <div
         className={`desktop:hidden z-[99999] fixed inset-y-0 right-0 w-[85vw] px-[7vw] dark:bg-Black75/80 bg-Light-grayish-blue ${
-          navMenu ? "translate-x-0" : "translate-x-[85vw]"
+          navMenu ? "translate-x-0 shadow-[-0.5vw_0_4vw_rgba(0,0,0,0.07)]" : "translate-x-[85vw]"
         } transition duration-300 ease-out`}
       >
         <section className="flex justify-between items-start pt-[4.5vw]">
@@ -91,25 +91,28 @@ const Navbar: React.FC = () => {
       </div>
       <nav
         id="navLinks"
-        className="max-w-screen border-b-[0.2vw] dark:border-b-gray-400 border-b-gray-200 desktop:px-[2vw] desktop:py-[1.3vw] py-[3.5vw] fixed top-0 w-full bg-Light-grayish-blue dark:bg-blue-600 backdrop-blur z-50"
+        className="max-w-screen w-[100vw] flex items-center justify-between border-b-[0.2vw] dark:border-b-gray-400 border-b-gray-200 desktop:px-[3vw] px-[5vw] desktop:h-[4.2vw] h-[13vw] fixed top-0 bg-Light-grayish-blue dark:bg-blue-600 backdrop-blur z-50"
       >
-        <ul className="desktop:gap-[3vw] justify-end desktop:visible desktop:flex hidden">
+        <a href="/" className="cursor-pointer2 mediumTxt flex items-center montserrat font-bold dark:text-Pale-orange text-fuchsia-500 text-shadow-2xs tracking-widest"><p className="flex items-center bg-gradient-to-r from-cyan-500 via-violet-300 to-orange-500 bg-clip-text text-transparent mediumbigTxt font-extrabold desktop:mr-[0.4vw] mr-[0.8vw] tracking-widest">{'</>'}</p>DEV PARTHA</a>
+        <ul className="h-full desktop:gap-[3vw] items-center justify-end desktop:visible desktop:flex hidden">
           {navItems.map(({ id, label, Icon }) => (
             <li
               key={id}
               onClick={() => handleScroll(id)}
-              className={`group font-semibold flex items-center justify-center desktop:gap-[0.3vw] !cursor-pointer2 transition hover:text-Grayish-blue hover:dark:text-Grayish-blue ${
+              className={`tracking-wide mediumTxt group font-semibold flex items-center justify-center  transition hover:text-Grayish-blue hover:dark:text-Grayish-blue ${
                 active === id
                   ? "active text-Black75 dark:text-Pale-orange"
                   : "text-Black75 dark:text-White"
               }`}
             >
+              <span className="h-fit flex desktop:gap-[0.35vw] !cursor-pointer2">
               <Icon className="desktop:w-[1.4vw] aspect-square fill-Black75 dark:fill-White text-White dark:text-Black75 group-hover:fill-Grayish-blue group-hover:dark:fill-Grayish-blue transition" />
               {label}
+              </span>
             </li>
           ))}
         </ul>
-        <div className="max-w-screen flex justify-end px-[6vw] desktop:hidden">
+        <div className="max-w-screen flex justify-end desktop:hidden">
           <IconMenu
             onClick={() => setNavMenu(!navMenu)}
             className="cursor-pointer2 w-[4vw] aspect-square"

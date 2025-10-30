@@ -1,0 +1,33 @@
+<!-- Minimalist PD emblem with thin circular border and "Venice" script -->
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="PD emblem">
+  <!-- Background -->
+  <rect width="256" height="256" fill="#ffffff"/>
+
+  <!-- Thin circular border -->
+  <circle cx="128" cy="128" r="100" fill="none" stroke="#333333" stroke-width="2"/>
+
+  <!-- PD letters (serif) centered -->
+  <text
+    x="128"
+    y="140"
+    text-anchor="middle"
+    fill="#333333"
+    font-size="88"
+    font-weight="700"
+    font-family="Georgia, 'Times New Roman', Times, serif"
+    letter-spacing="2"
+  >
+    PD
+  </text>
+
+  <!-- "Venice" in script at bottom-left -->
+  <text
+    x="22"
+    y="228"
+    fill="#333333"
+    font-size="18"
+    font-family="'Brush Script MT', 'Lucida Handwriting', 'Segoe Script', cursive"
+  >
+    Venice
+  </text>
+</svg>

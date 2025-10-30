@@ -36,7 +36,7 @@ function App() {
 
       {/* Main sections */}
       <main>
-        <Hero />
+        <Hero darkMode={darkMode}/>
         <About />
         <hr className="desktop:my-[3vw] h-0.5 border-0 bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
 

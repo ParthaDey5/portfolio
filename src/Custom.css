@@ -4,18 +4,18 @@
 @layer base, demo;
 
 @layer demo {
-  .carousel > div {
-    @apply transition desktop:duration-300 duration-500 ease-out desktop:scale-50 scale-40 desktop:my-[4vw] dark:bg-Black75 desktop:h-[28vw] h-[44vw] origin-center opacity-50;
+  .carousel-items > div {
+    @apply transition desktop:duration-300 duration-500 ease-out desktop:scale-50 scale-40 desktop:my-[4vw] dark:bg-Black75 desktop:h-[28vw] h-[52vw] origin-center opacity-50;
   }
 
-  .carousel > div.active {
-    @apply transition scale-120 desktop:my-[4vw] dark:bg-Black75 desktop:h-[28vw] h-[44vw];
+  .carousel-items > div.active {
+    @apply transition scale-120 desktop:my-[4vw] dark:bg-Black75 desktop:h-[28vw] h-[52vw];
 
     opacity: 1;
   }
 
   .carousel {
-    @apply desktop:w-[60vw] w-[72vw] desktop:auto-cols-[21vw] auto-cols-[30vw] desktop:gap-[2vw] gap-0;
+    @apply relative desktop:w-[60vw] w-[80vw];
     /* prev & next buttons */
     --nav-btn-size: 40px;
     --nav-btn-bg: rgb(15, 23, 43);
@@ -24,17 +24,23 @@
     /* item markers */
     --nav-marker-bg: rgb(15, 23, 43);
 
-    /* width: min(calc(100% - 2rem), 800px); */
+    position: relative; /* For button absolutes */
+    overflow: visible; /* Allow inner overflow to show; no clipping */
+  }
+
+  .carousel-items {
+    /* Inherited vars from .carousel */
     list-style: none;
     padding-block: 2rem; /* create space for drop shadows */
     display: grid;
     grid-auto-flow: column;
-    anchor-name: --carousel;
+    anchor-name: --carousel; /* Anchor for markers on the scrolling element */
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     overscroll-behavior-x: contain;
     scroll-behavior: smooth;
     scrollbar-width: none;
+    @apply desktop:auto-cols-[21vw] auto-cols-[33vw] desktop:gap-[2vw] gap-0; /* Responsive grid/gap */
 
     /* empty pseudo elements to push first and last items to the middle */
     &::before,
@@ -43,13 +49,13 @@
     }
 
     /**************** MARKERS GROUP *******************/
-    .carousel::scroll-marker-group {
+    &::scroll-marker-group {
       top: 10rem !important; /* or any value */
     }
-    
+
     scroll-marker-group: after;
-    &::scroll-marker-group
-     {
+    &::scroll-marker-group {
+      @apply desktop:gap-[0.4vw] gap-[1vw];
       position: absolute;
       position-anchor: --carousel;
       inline-size: min(90cqi, 400px);
@@ -57,55 +63,27 @@
       align-items: center;
       justify-content: center;
       justify-self: center;
-      gap: 0.25rem;
       padding-block-start: 1rem;
-      /* top: calc(anchor(bottom) + 1rem); */
       left: calc(anchor(left) - 10%);
       right: calc(anchor(right) - 10%);
     }
-    &::scroll-marker{
-      @apply !cursor-pointer2;
-    }
+    
 
-    @media (min-width: 855px) and (max-width: 2560px) {
-      &::scroll-marker-group{
-        @apply !cursor-pointer2;
-        position: absolute;
-        top: anchor(bottom);
-        bottom: 10vw
+    
+      &::scroll-marker-group {
+        @apply absolute desktop:bottom-[-28vw] bottom-[-48vw];
       }
-      &::scroll-button(inline-start) {
-        content: "❮";
-        left: calc(anchor(left) - var(--nav-btn-size) - 1rem);
-      }
-      &::scroll-button(inline-end) {
-        content: "❯";
-        right: calc(anchor(right) - var(--nav-btn-size) - 1rem);
-      }
-
-    }@media (max-width: 854px) {
-      &::scroll-marker-group{
-      position: absolute;
-      top: calc(anchor(bottom) + 3vw);
-    }
-    &::scroll-button(inline-start) {
-      content: "❮";
-      left: calc(anchor(left) - var(--nav-btn-size) - 0.5rem);
-    }
-    &::scroll-button(inline-end) {
-      content: "❯";
-      right: calc(anchor(right) - var(--nav-btn-size) - 0.5rem);
-    }
-  }
+    
+    
     /* carousel item */
 
     > div {
-      @apply shadow-[0_0.1vw_1vw_rgba(0,0,0,0.25)];
+      @apply desktop:rounded-[1.1vw] rounded-[3vw] shadow-[0_0.1vw_1vw_rgba(0,0,0,0.25)];
+
       position: relative;
       scroll-snap-align: center;
       scroll-snap-stop: always;
       container-type: scroll-state;
-      border-radius: 20px;
       display: grid;
       grid-template-areas:
         "img"
@@ -139,14 +117,12 @@
         height: 100%; /* fills its 50% row */
 
         & > img {
+          @apply desktop:rounded-t-[1.1vw] rounded-t-[3vw];
+
           width: 100%;
           height: 100%;
           aspect-ratio: 6/5;
           object-fit: fill;
-          border-top-left-radius: 20px;
-          border-top-right-radius: 20px;
-          border-bottom-left-radius: 0;
-          border-bottom-right-radius: 0;
         }
       }
 
@@ -155,10 +131,8 @@
         @apply bg-White;
       }
       &::scroll-marker {
-        @apply bg-Black75;
+        @apply bg-Black75 desktop:w-[1.5vw] w-[4.4vw] aspect-square cursor-pointer2;
         content: " ";
-        height: 20px;
-        aspect-ratio: 1;
         border-radius: 50%;
         transition: 150ms ease-in-out;
         scale: 0.75;
@@ -177,46 +151,6 @@
       }
     }
 
-    /************* NAV BUTTONS ************/
-    .dark &::scroll-button(*) {
-      @apply !bg-Orange/95 opacity-100;
-    }
-    .dark &::scroll-button(*):disabled {
-      @apply opacity-50;
-    }
-    &::scroll-button(*) {
-      @apply !cursor-pointer2;
-      position: absolute;
-      position-anchor: --carousel;
-      width: var(--nav-btn-size);
-      aspect-ratio: 1 / 1;
-      font: inherit;
-      background-color: var(--nav-btn-bg);
-      display: grid;
-      place-content: center;
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      opacity: 0.7;
-      cursor: pointer;
-      transition: all 150ms ease-in-out;
-      outline: 1px dashed transparent;
-      outline-offset: 0px;
-    }
-    
-    &::scroll-button(*):not(:disabled):where(:hover, :focus-visible) {
-      opacity: 1;
-      scale: 1.1;
-    }
-    &::scroll-button(*):focus-visible {
-      outline: 1px dashed var(--nav-btn-bg);
-      outline-offset: 4px;
-    }
-    &::scroll-button(*):disabled {
-      opacity: 0.25;
-      cursor: unset;
-    }
-
     /************* Fallback for browsers without scroll-state *************/
     @supports not (container-type: scroll-state) {
       > div {
@@ -229,6 +163,57 @@
         opacity: 1;
       }
     }
+  }
+
+  /************* NAV BUTTONS ************/
+  .scroll-button {
+    @apply !cursor-pointer2 desktop:w-[3vw] w-[6vw] aspect-square desktop:text-[1.5vw] text-[3vw] flex items-center justify-center;
+    position: absolute;
+    top: 50%;
+    background-color: var(--nav-btn-bg, rgb(15, 23, 43));
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    opacity: 0.7;
+    transition: all 150ms ease-in-out;
+    outline: 1px dashed transparent;
+    outline-offset: 0px;
+    z-index: 10;
+    transform: translateY(-50%);
+  }
+
+  .scroll-button:not(:disabled):where(:hover, :focus-visible) {
+    opacity: 1;
+    scale: 1.1;
+  }
+
+  .scroll-button:focus-visible {
+    outline: 1px dashed var(--nav-marker-bg); /* Use --nav-marker-bg for dashed line consistency */
+    outline-offset: 4px;
+  }
+
+  .scroll-button:disabled {
+    opacity: 0.25;
+    cursor: unset;
+  }
+
+  /* Dark mode overrides */
+  .dark .scroll-button {
+    @apply !bg-Orange/95 opacity-100;
+  }
+
+  .dark .scroll-button:disabled {
+    @apply opacity-50;
+  }
+
+  /* Position prev/next */
+  .scroll-button.prev {
+    @apply -left-[3vw];
+  }
+  
+  .scroll-button.next {
+    @apply -right-[3vw];
+    
   }
 }
 
