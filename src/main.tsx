@@ -7,7 +7,6 @@ import App from "./App.tsx";
 // Immediately hide scrollbar on script load
 document.documentElement.classList.add("no-scroll"); // Targets <html>
 
-
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <App />
@@ -20,7 +19,7 @@ window.addEventListener("load", () => {
   if (preloader) {
     setTimeout(() => {
       preloader.classList.add("hidden");
-      document.documentElement.classList.remove("no-scroll")
-    }, 100);
+      document.documentElement.classList.remove("no-scroll");
+    }, 5000);
   }
 });

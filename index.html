@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/PD.png" />
@@ -45,10 +45,9 @@
       }
 
       .loader p {
-        @apply dark:text-Pale-orange text-Black75;
+        @apply dark:text-White text-Black75 desktop:text-[2vw] text-[5vw];
         margin-top: 20px;
-        font-family: "Arial", sans-serif; /* Use a modern font like 'Poppins' via Google Fonts */
-        font-size: 18px;
+        font-family: "Poppins"; /* Use a modern font like 'Poppins' via Google Fonts */
         animation: pulse 1.5s infinite; /* Pulsing effect for modernity */
       }
 
@@ -85,6 +84,32 @@
         }
       }
     </style>
+
+        <!-- Synchronous Theme Init: Runs before body paints, reads localStorage/system -->
+        <script>
+          (function() {
+            // Mirror App.tsx logic exactly
+            const stored = localStorage.getItem('darkMode');
+            let isDark = false;
+            
+            if (stored !== null) {
+              isDark = JSON.parse(stored);
+            } else {
+              // Fallback to system
+              isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            }
+            
+            // Set class immediately—no flash!
+            if (isDark) {
+              document.documentElement.classList.add('dark');
+            } else {
+              document.documentElement.classList.remove('dark');
+            }
+            
+            // Optional: Hide scrollbar early
+            document.documentElement.classList.add('no-scroll');
+          })();
+        </script>
   </head>
   <body
     class="inter max-w-screen !overflow-x-hidden text-Black75 dark:text-White"

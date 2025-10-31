@@ -50,7 +50,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
   return (
     <div
       id="home"
-      className="relative text-white min-h-screen flex items-center justify-center overflow-hidden transition-colors duration-300 ease-in"
+      className="relative text-white min-h-screen flex items-center justify-center overflow-hidden transition-colors duration-300 ease-in desktop:py-0 py-[40vw]"
     >
       {/* Hidden video source, theme-dependent */}
       <video
