@@ -96,7 +96,7 @@
               isDark = JSON.parse(stored);
             } else {
               // Fallback to system
-              isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+              isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             }
             
             // Set class immediately—no flash!
@@ -106,8 +106,6 @@
               document.documentElement.classList.remove('dark');
             }
             
-            // Optional: Hide scrollbar early
-            document.documentElement.classList.add('no-scroll');
           })();
         </script>
   </head>

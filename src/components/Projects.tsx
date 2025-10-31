@@ -6,6 +6,7 @@ import TailwindIcon from "..//assets/images/tailwindcss-original.svg?react";
 import JavascriptIcon from "..//assets/images/javascript-original.svg?react";
 import FramerIcon from "..//assets/images/framermotion-original.svg?react";
 
+
 // Define the shape of a project
 interface Project {
   title: string;
@@ -284,12 +285,22 @@ const Projects: React.FC = () => {
       <p className="msg-supports">
         Sorry, your browser doesn&apos;t support <code>::scroll-*</code>
       </p>
-      <section className="carousel"> {/* Outer: relative, no overflow to contain buttons */}
+      <section className="carousel">
+        {" "}
+        {/* Outer: relative, no overflow to contain buttons */}
         {/* Navigation buttons as children of outer (absolute to it) */}
-        <button ref={prevBtnRef} className="scroll-button prev" aria-label="Previous slide">
+        <button
+          ref={prevBtnRef}
+          className="scroll-button prev"
+          aria-label="Previous slide"
+        >
           ❮
         </button>
-        <button ref={nextBtnRef} className="scroll-button next" aria-label="Next slide">
+        <button
+          ref={nextBtnRef}
+          className="scroll-button next"
+          aria-label="Next slide"
+        >
           ❯
         </button>
         {/* Inner wrapper for scrollable cards */}
@@ -298,7 +309,11 @@ const Projects: React.FC = () => {
             <ProjectCard
               key={i}
               {...p}
-              className={`desktop:p-[0.2rem] p-[0.5vw] ${i === 0 ? "scroll-start dark:bg-gradient-to-r from-cyan-400 to-Orange" : ""}`}
+              className={`desktop:p-[0.2rem] p-[0.5vw] ${
+                i === 0
+                  ? "scroll-start dark:bg-gradient-to-r from-cyan-400 to-Orange"
+                  : ""
+              }`}
             />
           ))}
         </div>

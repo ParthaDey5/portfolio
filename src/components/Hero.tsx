@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import Typewriter from "typewriter-effect";
 import { useSpring, animated, useTransition } from "@react-spring/web";
 
-
 // Define props interface
 interface HeroSectionProps {
   darkMode: boolean;
@@ -43,9 +42,15 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
       requestAnimationFrame(render);
     };
     render();
-    
-    
   }, [darkMode]);
+
+  // Smooth scroll handler
+  const handleScroll = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   return (
     <div
@@ -55,7 +60,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
       {/* Hidden video source, theme-dependent */}
       <video
         ref={videoRef}
-        src={darkMode? "video/NeonAbstracts4.mp4" : "video/abstract.mp4"}
+        src={darkMode ? "video/NeonAbstracts4.mp4" : "video/abstract.mp4"}
         muted
         loop
         playsInline
@@ -67,7 +72,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
         ref={canvasRef}
         width={1920}
         height={1080}
-        className={`${darkMode?"opacity-100 blur-0":"opacity-40 blur-[0.05vw]"} absolute inset-0 w-full h-full object-cover transition duration-800`}
+        className={`${
+          darkMode ? "opacity-100 blur-0" : "opacity-40 blur-[0.05vw]"
+        } absolute inset-0 w-full h-full object-cover transition duration-800`}
       />
 
       <div className="relative z-10 text-center">
@@ -98,17 +105,18 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
         >
           Crafting{" "}
           <span className="text-orange-600 text-shadow-2xs">innovative</span>,{" "}
-          <span className="text-orange-600 text-shadow-2xs">responsive</span>, and{" "}
-          <span className="text-cyan-500">user-centric</span> web experiences.
+          <span className="text-orange-600 text-shadow-2xs">responsive</span>,
+          and <span className="text-cyan-500">user-centric</span> web
+          experiences.
         </animated.p>
 
         {/* CTA */}
         <animated.a
-          href="#projects"
+          onClick={() => handleScroll("projects")}
           style={scaleButton}
           className="kumbh buttonTxt relative desktop:tracking-[0.1rem] tracking-[0.1rem] bg-gradient-to-r from-fuchsia-600 to-blue-400 text-White font-bold desktop:py-[1.2rem] py-[6vw] desktop:px-[1.5rem] px-[6vw] rounded-full transition duration-300 shadow-lg hover:shadow-xl cursor-pointer2"
         >
-          <div className="backdrop-saturate-125 absolute inset-0 rounded-full"></div>
+          <div className="backdrop-saturate-125 absolute inset-0 rounded-full pointer-events-none"></div>
           Explore My Projects
         </animated.a>
       </div>
