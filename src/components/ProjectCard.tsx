@@ -41,33 +41,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 
   return (
     <div ref={cardRef} className={className}>
-      {/* <div
-        className="desktop:rounded-[1.44vw] absolute inset-0 flex items-center justify-center desktop:gap-[2vw] bg-Black75/50 transition-all ease-linear z-[50]"
-        style={{
-          opacity: isActive && hovered ? 1 : 0,
-          pointerEvents: isActive && hovered ? "auto" : "none",
-        }}
-      >
-        <a
-          href={link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center desktop:gap-[0.5vw] animate-fade-in-up transition-all ease-linear cursor-pointer2 bg-gradient-to-r from-cyan-400 to-cyan-500 desktop:rounded-[0.2vw] desktop:py-[0.25vw] desktop:px-[1vw] text-white"
-        >
-          <External className="desktop:w-[1vw] aspect-square" />
-          Live
-        </a>
-        <a
-          href={code}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center desktop:gap-[0.5vw] cursor-pointer2 bg-Light-grayish-blue desktop:rounded-[0.2vw] desktop:py-[0.25vw] desktop:px-[1vw] text-Black75"
-        >
-          <Github className="desktop:w-[1.15vw] aspect-square" />
-          Code
-        </a>
-      </div> */}
-
+     
       <div className="img dark:border-Dark-grayish-blue border-Light-grayish-blue">
         <img src={img} alt={title} />
       </div>
@@ -85,7 +59,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             href={link}
             target="_blank"
             rel="noopener noreferrer"
-            className="shadow-md dark:shadow-none shadow-gray-300 flex items-center justify-center desktop:gap-[0.4vw] gap-[0.5vw] animate-fade-in-up transition-all ease-linear cursor-pointer2 bg-gradient-to-r from-green-300 via-cyan-400 to-green-600 desktop:rounded-[0.28vw] rounded-[0.5vw] tracking-[0.03vw] desktop:w-[5.5vw] w-[8vw]  py-[0.3vw] text-white"
+            className="shadow-md dark:shadow-none shadow-gray-300 flex items-center justify-center desktop:gap-[0.4vw] gap-[0.5vw] animate-fade-in-up transition-all ease-linear !cursor-pointer2 bg-gradient-to-r from-green-300 via-cyan-400 to-green-600 desktop:rounded-[0.28vw] rounded-[0.5vw] tracking-[0.03vw] desktop:w-[5.5vw] w-[8vw]  py-[0.3vw] text-white"
           >
             <External className="desktop:w-[0.9vw] w-[1.5vw] aspect-square" />
             Live

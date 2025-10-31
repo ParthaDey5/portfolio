@@ -279,7 +279,7 @@ const Projects: React.FC = () => {
   return (
     <div
       id="projects"
-      className="dark:bg-Dark-grayish-blue min-w-screen min-h-screen !flex !flex-col !items-center !justify-center transition-colors duration-300 ease-in"
+      className="dark:bg-Dark-grayish-blue min-w-screen desktop:py-[3vw] py-[25vw] min-h-screen !flex !flex-col !items-center !justify-center transition-colors duration-300 ease-in"
     >
       <p className="msg-supports">
         Sorry, your browser doesn&apos;t support <code>::scroll-*</code>

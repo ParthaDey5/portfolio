@@ -9,7 +9,7 @@
   }
 
   .carousel-items > div.active {
-    @apply transition scale-120 desktop:my-[4vw] dark:bg-Black75 desktop:h-[28vw] h-[52vw];
+    @apply transition scale-120 my-[4vw] dark:bg-Black75 desktop:h-[28vw] h-[52vw] ;
 
     opacity: 1;
   }
@@ -50,7 +50,8 @@
 
     /**************** MARKERS GROUP *******************/
     &::scroll-marker-group {
-      top: 10rem !important; /* or any value */
+      @apply h-fit desktop:top-[40vw] top-[73vw];
+      
     }
 
     scroll-marker-group: after;

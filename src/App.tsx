@@ -11,8 +11,13 @@ import { useEffect, useState } from "react";
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
     const stored = localStorage.getItem("darkMode");
-    return stored ? JSON.parse(stored) : false;
+    if (stored !== null) {
+      return JSON.parse(stored); // Use stored if exists
+    }
+    // Fallback to system preference if no stored value
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
   });
+
   useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(darkMode));
   }, [darkMode]);
@@ -25,10 +30,24 @@ function App() {
     }
   }, [darkMode]);
 
+  // Listen for system theme changes (always sync, overriding saved/manual)
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const handleChange = (e: MediaQueryListEvent) => {
+      // NEW: Always update to system on change (overrides everything)
+      setDarkMode(e.matches);
+      // NEW: Update localStorage too, so next session starts from latest system
+      localStorage.setItem("darkMode", JSON.stringify(e.matches));
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []); // Empty deps: Runs once on mount
+
   return (
     <div className="font-sans bg-light dark:bg-Dark-grayish-blue dark:text-light text-Black75 scroll-smooth flex flex-col">
       {/* dark & light mode toggle */}
-      <section className="fixed desktop:bottom-[0.7vw] bottom-[3vw] desktop:right-[1.5vw] right-[3vw] z-[99999999999]">
+      <section className="fixed desktop:bottom-[0.7vw] bottom-[3vw] desktop:right-[1.5vw] right-[3vw] z-[99999999]">
         <ThemeToggleBtn {...{ darkMode, setDarkMode }} />
       </section>
       {/* Navigation always on top */}
