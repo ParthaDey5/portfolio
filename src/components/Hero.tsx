@@ -73,7 +73,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
         width={1920}
         height={1080}
         className={`${
-          darkMode ? "opacity-100 blur-0" : "opacity-40 blur-[0.05vw]"
+          darkMode ? "opacity-100 blur-0" : "opacity-30 blur-[0.05vw]"
         } absolute inset-0 w-full h-full object-cover transition duration-800`}
       />
 
