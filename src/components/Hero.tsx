@@ -81,7 +81,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
       <div className="relative z-10 text-center">
         {/* Headline */}
         <animated.div style={fadeIn}>
-          <h1 className="bigTxt desktop:py-[0.5vw] font-bold text-cyan-500 dark:text-Orange leading-none desktop:mb-0 mb-[4vw]">
+          <h1 className="bigTxt desktop:py-[0.5vw] font-bold text-cyan-500 dark:text-fuchsia-400 leading-none desktop:mb-0 mb-[4vw]">
             <Typewriter
               options={{
                 strings: [
