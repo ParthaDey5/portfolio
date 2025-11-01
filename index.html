@@ -53,10 +53,8 @@
 
       /* Modern Spinner */
       .spinner {
-        width: 50px;
-        height: 50px;
-        border: 5px solid #ccc;
-        border-top: 5px solid; /* Gradient for a modern, vibrant look */
+        @apply desktop:w-[4vw] w-[10vw] aspect-square desktop:border-[0.5vw] border-[1.2vw] border-[#ccc];
+
         border-image: linear-gradient(45deg, #ff6b6b, #4ecdc4) 1;
         border-radius: 50%;
         animation: spin 1s linear infinite;
@@ -85,29 +83,28 @@
       }
     </style>
 
-        <!-- Synchronous Theme Init: Runs before body paints, reads localStorage/system -->
-        <script>
-          (function() {
-            // Mirror App.tsx logic exactly
-            const stored = localStorage.getItem('darkMode');
-            let isDark = false;
-            
-            if (stored !== null) {
-              isDark = JSON.parse(stored);
-            } else {
-              // Fallback to system
-              isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            }
-            
-            // Set class immediately—no flash!
-            if (isDark) {
-              document.documentElement.classList.add('dark');
-            } else {
-              document.documentElement.classList.remove('dark');
-            }
-            
-          })();
-        </script>
+    <!-- Synchronous Theme Init: Runs before body paints, reads localStorage/system -->
+    <script>
+      (function () {
+        // Mirror App.tsx logic exactly
+        const stored = localStorage.getItem("darkMode");
+        let isDark = false;
+
+        if (stored !== null) {
+          isDark = JSON.parse(stored);
+        } else {
+          // Fallback to system
+          isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        }
+
+        // Set class immediately—no flash!
+        if (isDark) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      })();
+    </script>
   </head>
   <body
     class="inter max-w-screen !overflow-x-hidden text-Black75 dark:text-White"
