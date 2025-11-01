@@ -21,6 +21,6 @@ window.addEventListener("load", () => {
     setTimeout(() => {
       preloader.classList.add("hidden");
       document.documentElement.classList.remove("no-scroll");
-    }, 500);
+    }, 5000);
   }
 });
