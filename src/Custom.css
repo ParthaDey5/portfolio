@@ -5,17 +5,17 @@
 
 @layer demo {
   .carousel-items > div {
-    @apply transition desktop:duration-300 duration-500 ease-out desktop:scale-50 scale-40 desktop:my-[4vw] dark:bg-Black75 desktop:h-[28vw] h-[52vw] origin-center opacity-50;
+    @apply transition desktop:duration-300 duration-500 ease-out desktop:scale-50 scale-40 desktop:my-[4vw] dark:bg-Black75 origin-center opacity-50 desktop:h-[31vw] h-[50vw] ;
   }
 
   .carousel-items > div.active {
-    @apply transition scale-120 my-[4vw] dark:bg-Black75 desktop:h-[28vw] h-[52vw] ;
+    @apply transition scale-120 my-[4vw] dark:bg-Black75  desktop:h-[31vw] h-[50vw] ;
 
     opacity: 1;
   }
 
   .carousel {
-    @apply relative desktop:w-[60vw] w-[80vw];
+    @apply relative desktop:w-[66vw] w-[80vw];
     /* prev & next buttons */
     --nav-btn-size: 40px;
     --nav-btn-bg: rgb(15, 23, 43);
@@ -40,7 +40,7 @@
     overscroll-behavior-x: contain;
     scroll-behavior: smooth;
     scrollbar-width: none;
-    @apply desktop:auto-cols-[21vw] auto-cols-[33vw] desktop:gap-[2vw] gap-0; /* Responsive grid/gap */
+    @apply desktop:auto-cols-[23vw] auto-cols-[33vw] desktop:gap-[2vw] gap-0; /* Responsive grid/gap */
 
     /* empty pseudo elements to push first and last items to the middle */
     &::before,
@@ -50,7 +50,7 @@
 
     /**************** MARKERS GROUP *******************/
     &::scroll-marker-group {
-      @apply h-fit desktop:top-[40vw] top-[73vw];
+      @apply h-fit desktop:top-[44vw] top-[70vw];
       
     }
 

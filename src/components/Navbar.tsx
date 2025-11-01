@@ -93,7 +93,7 @@ const Navbar: React.FC = () => {
         id="navLinks"
         className="max-w-screen w-[100vw] flex items-center justify-between border-b-[0.2vw] dark:border-b-gray-400 border-b-gray-200 desktop:px-[3vw] px-[5vw] desktop:h-[4.2vw] h-[13vw] fixed top-0 bg-Light-grayish-blue dark:bg-blue-600 backdrop-blur z-50"
       >
-        <a href="/" className="cursor-pointer2 mediumTxt flex items-center montserrat font-bold dark:text-Pale-orange text-fuchsia-500 text-shadow-2xs tracking-widest"><p className="flex items-center bg-gradient-to-r from-cyan-500 via-violet-300 to-orange-500 bg-clip-text text-transparent mediumbigTxt font-extrabold desktop:mr-[0.4vw] mr-[0.8vw] tracking-widest">{'</>'}</p>DEV PARTHA</a>
+        <a href="/" className="cursor-pointer2 mediumTxt flex items-center montserrat font-bold dark:text-Pale-orange text-fuchsia-500 text-shadow-2xs tracking-widest"><h1 className="flex items-center bg-gradient-to-r from-cyan-500 via-violet-300 to-orange-500 bg-clip-text text-transparent mediumbigTxt font-extrabold desktop:mr-[0.4vw] mr-[0.8vw] tracking-widest">{'</>'}</h1>DEV PARTHA</a>
         <ul className="h-full desktop:gap-[3vw] items-center justify-end desktop:visible desktop:flex hidden">
           {navItems.map(({ id, label, Icon }) => (
             <li

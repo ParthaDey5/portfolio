@@ -16,9 +16,9 @@ const Contact: React.FC = () => {
         CONTACT
       </h3>
       <section className="flex flex-col items-start desktop:gap-0 gap-[0.8vw] desktop:px-[5vw] px-[7vw]">
-        <p className="dark:text-yellow-600 midnightBlue bigTxt desktop:tracking-[0.04vw] tracking-[0.04vw] font-bold">
+        <h4 className="dark:text-yellow-600 midnightBlue bigTxt desktop:tracking-[0.04vw] tracking-[0.04vw] font-bold">
           Get in Touch!
-        </p>
+        </h4>
         <p className="text-left dark:text-White midnightBlue mediumbigTxt font-medium desktop:tracking-[0.05vw] tracking-[0.1vw]">
           Feel free to get in touch with me. Let's build something together!
         </p>
@@ -34,12 +34,13 @@ const Contact: React.FC = () => {
     transition-transform duration-300 ease-linear group-hover:fill-Orange dark:group-hover:fill-Orange"
             style={{ transform: "scale(var(--scale))" }}
           />
-          <p className="tracking-wider dark:text-White mediumbigTxt">
+          <h4 className="tracking-wider dark:text-White mediumbigTxt">
             MAIL
-            </p>
+            </h4>
         </a>
         <section className="desktop:mt-[1vw] mt-[4vw] flex desktop:gap-[1.6vw] gap-[4vw]">
           <a
+          aria-label="Go to my Github page"
             className="cursor-pointer2 desktop:mt-[1vw]"
             href="https://github.com/ParthaDey5"
             target="_blank"
@@ -48,6 +49,7 @@ const Contact: React.FC = () => {
             <Github className="desktop:w-[2.2vw] w-[5vw] aspect-square dark:fill-White fill-accent dark:hover:fill-Orange hover:fill-Orange hover:scale-110 duration-300" />
           </a>
           <a
+          aria-label="Go to my Frontedmentor profile"
             className="cursor-pointer2 desktop:mt-[1vw]"
             href="https://www.frontendmentor.io/profile/ParthaDey5"
             target="_blank"

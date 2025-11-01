@@ -13,6 +13,7 @@ createRoot(document.getElementById("root")!).render(
   </StrictMode>
 );
 
+
 // Hide preloader when everything is loaded
 window.addEventListener("load", () => {
   const preloader = document.getElementById("preloader");
@@ -20,6 +21,6 @@ window.addEventListener("load", () => {
     setTimeout(() => {
       preloader.classList.add("hidden");
       document.documentElement.classList.remove("no-scroll");
-    }, 5000);
+    }, 500);
   }
 });

@@ -64,9 +64,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
         muted
         loop
         playsInline
+        preload="none"
         style={{ display: "none" }}
       />
-
+        
       {/* Visible canvas background */}
       <canvas
         ref={canvasRef}
@@ -80,7 +81,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
       <div className="relative z-10 text-center">
         {/* Headline */}
         <animated.div style={fadeIn}>
-          <h1 className="bigTxt desktop:py-[0.5vw] font-bold text-accent dark:text-Orange leading-none desktop:mb-0 mb-[4vw]">
+          <h1 className="bigTxt desktop:py-[0.5vw] font-bold text-cyan-500 dark:text-Orange leading-none desktop:mb-0 mb-[4vw]">
             <Typewriter
               options={{
                 strings: [
@@ -99,7 +100,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
         </animated.div>
 
         {/* Paragraph */}
-        <animated.p
+        <animated.h2
           style={fadeIn}
           className="mediumSmallTxt desktop:tracking-[0.01rem] tracking-[0.04rem] desktop:mb-[3rem] mb-[12vw] text-Dark-grayish-blue dark:text-white font-semibold px-[7vw] leading-[6vw]"
         >
@@ -108,13 +109,13 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
           <span className="text-orange-600 text-shadow-2xs">responsive</span>,
           and <span className="text-cyan-500">user-centric</span> web
           experiences.
-        </animated.p>
+        </animated.h2>
 
         {/* CTA */}
         <animated.a
           onClick={() => handleScroll("projects")}
           style={scaleButton}
-          className="kumbh buttonTxt relative desktop:tracking-[0.1rem] tracking-[0.1rem] bg-gradient-to-r from-fuchsia-600 to-blue-400 text-White font-bold desktop:py-[1.2rem] py-[6vw] desktop:px-[1.5rem] px-[6vw] rounded-full transition duration-300 shadow-lg hover:shadow-xl cursor-pointer2"
+          className="kumbh buttonTxt relative desktop:tracking-[0.1rem] tracking-[0.1rem] bg-gradient-to-r from-fuchsia-600 to-blue-400 text-White font-bold desktop:py-[1.5vw] py-[6vw] desktop:px-[1.5rem] px-[6vw] rounded-full transition duration-300 shadow-lg hover:shadow-xl cursor-pointer2"
         >
           <div className="backdrop-saturate-125 absolute inset-0 rounded-full pointer-events-none"></div>
           Explore My Projects
