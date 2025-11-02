@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
 import Typewriter from "typewriter-effect";
 import { useSpring, animated, useTransition } from "@react-spring/web";
+import NeonAbstracts from "/video/NeonAbstracts4.mp4";
+import Abstract from "/video/Abstract.mp4";
 
 // Define props interface
 interface HeroSectionProps {
@@ -60,11 +62,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
       {/* Hidden video source, theme-dependent */}
       <video
         ref={videoRef}
-        src={darkMode ? "video/NeonAbstracts4.mp4" : "video/abstract.mp4"}
+        src={darkMode ? NeonAbstracts : Abstract}
         muted
         loop
         playsInline
-        preload="none"
+        preload="auto"
         style={{ display: "none" }}
       />
         
@@ -74,8 +76,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
         width={1920}
         height={1080}
         className={`${
-          darkMode ? "opacity-100 blur-0" : "opacity-30 blur-[0.05vw]"
-        } absolute inset-0 w-full h-full object-cover transition duration-800`}
+          darkMode ? "opacity-100" : "opacity-30 "
+        } absolute inset-0 w-full h-full object-cover transition-all ease-linear delay-300`}
       />
 
       <div className="relative z-10 text-center">

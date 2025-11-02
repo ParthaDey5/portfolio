@@ -182,19 +182,21 @@ const Projects: React.FC = () => {
   useEffect(() => {
     const el = carouselRef.current;
     if (!el) return;
-
+  
+    console.log('Carousel init: clientWidth=', el.clientWidth, 'scrollWidth=', el.scrollWidth);
+  
     const children = Array.from(el.children).filter(
-      (child) => child instanceof HTMLElement // No need for scroll-button filter since buttons are now outside
+      (child) => child instanceof HTMLElement
     );
-
+  
     // Initialize first as active
     children.forEach((c) => c.classList.remove("active"));
     if (children[0]) children[0].classList.add("active");
-
+  
     const updateActive = () => {
       const { scrollLeft, clientWidth } = el;
       const center = scrollLeft + clientWidth / 2;
-
+  
       let best = { idx: 0, dist: Infinity };
       children.forEach((child, idx) => {
         const rect = child.getBoundingClientRect();
@@ -206,65 +208,105 @@ const Projects: React.FC = () => {
         const d = Math.abs(childCenter - center);
         if (d < best.dist) best = { idx, dist: d };
       });
-
+  
       children.forEach((c) => c.classList.remove("active"));
       children[best.idx]?.classList.add("active");
     };
-
-    // Calculate scroll amount based on first child's width + gap
+  
+    // Precise scrollAmount: Average child width + gap (handles uneven cards)
     const getScrollAmount = () => {
-      if (children[0]) {
-        const firstChild = children[0] as HTMLElement;
-        const childWidth = firstChild.offsetWidth;
-        const style = getComputedStyle(el);
-        const gap = parseFloat(style.gap) || 0;
-        return childWidth + gap;
-      }
-      return el.clientWidth; // Fallback
+      if (children.length === 0) return el.clientWidth;
+      const totalWidth = children.reduce((sum, child) => sum + child.offsetWidth, 0);
+      const avgWidth = totalWidth / children.length;
+      const style = getComputedStyle(el);
+      const gap = parseFloat(style.gap) || 0;
+      return avgWidth + gap;
     };
-
+  
     let scrollAmount = getScrollAmount();
-
+  
+    // Simple math disable with generous tolerance for offsets
     const updateButtons = () => {
       const maxScroll = el.scrollWidth - el.clientWidth;
+      const tolerance = Math.min(150, el.clientWidth * 0.15); // Bumped to eat 50px + gaps
+      const currentLeft = el.scrollLeft;
+  
+      console.log('Update: scrollLeft=', currentLeft, 'maxScroll=', maxScroll, 'tolerance=', tolerance);
+  
+      const prevDisabled = currentLeft <= tolerance;
+      const nextDisabled = currentLeft >= (maxScroll - tolerance);
+  
       if (prevBtnRef.current) {
-        prevBtnRef.current.disabled = el.scrollLeft <= 0;
+        prevBtnRef.current.disabled = prevDisabled;
+        prevBtnRef.current.setAttribute('aria-disabled', prevDisabled ? 'true' : 'false');
+        console.log('Prev disabled:', prevDisabled);
+        if (prevDisabled && document.activeElement === prevBtnRef.current) {
+          (prevBtnRef.current as HTMLElement).blur();
+        }
       }
+  
       if (nextBtnRef.current) {
-        nextBtnRef.current.disabled = el.scrollLeft >= maxScroll;
+        nextBtnRef.current.disabled = nextDisabled;
+        nextBtnRef.current.setAttribute('aria-disabled', nextDisabled ? 'true' : 'false');
+        console.log('Next disabled:', nextDisabled);
+        if (nextDisabled && document.activeElement === nextBtnRef.current) {
+          (nextBtnRef.current as HTMLElement).blur();
+        }
       }
     };
-
+  
     const handlePrev = () => {
+      if (prevBtnRef.current?.disabled) return;
       el.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+      // Settle check
+      setTimeout(updateButtons, 500);
     };
-
+  
     const handleNext = () => {
-      el.scrollBy({ left: scrollAmount, behavior: "smooth" });
+      if (nextBtnRef.current?.disabled) return;
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      if (el.scrollLeft + scrollAmount > maxScroll) {
+        el.scrollTo({ left: maxScroll, behavior: "smooth" });
+      } else {
+        el.scrollBy({ left: scrollAmount, behavior: "smooth" });
+      }
+      setTimeout(updateButtons, 500);
     };
-
+  
     const onScroll = () => {
       updateActive();
       updateButtons();
     };
+  
     const onResize = () => {
-      updateActive();
-      scrollAmount = getScrollAmount(); // Recalc for robustness
+      clearTimeout((window as any).__resizeTimeout);
+      (window as any).__resizeTimeout = setTimeout(() => {
+        scrollAmount = getScrollAmount();
+        updateActive();
+        updateButtons();
+      }, 150);
     };
-
+  
+    // Ruthless init reset: Force 0 after micro-delay (beats CSS reflow)
+    setTimeout(() => {
+      el.scrollTo({ left: 0, behavior: 'instant' });
+      console.log('Post-settle force scrollLeft=0');
+      updateActive();
+      updateButtons();
+    }, 50); // 50ms for DOM settle
+  
     if (prevBtnRef.current) {
       prevBtnRef.current.addEventListener("click", handlePrev);
     }
     if (nextBtnRef.current) {
       nextBtnRef.current.addEventListener("click", handleNext);
     }
-
+  
     el.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
-
-    updateActive();
-    updateButtons();
-
+  
+    updateButtons(); // Immediate call
+  
     return () => {
       if (prevBtnRef.current) {
         prevBtnRef.current.removeEventListener("click", handlePrev);
@@ -274,8 +316,9 @@ const Projects: React.FC = () => {
       }
       el.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
+      clearTimeout((window as any).__resizeTimeout);
     };
-  }, []); // Empty deps since projects are static
+  }, []);
 
   return (
     <div

@@ -123,7 +123,7 @@ module.exports = {
         "pop-in": "pop-in 0.3s ease-out forwards",
         bounce: "bounce 0.6s infinite alternate",
         "fade-in": "fade-in 1s ease forwards",
-        "slide-right": "slide-left 0.5s cubic-bezier(0.22,1,0.36,1)",
+        "slide-right": "slide-right 0.5s cubic-bezier(0.22,1,0.36,1)",
         "slide-left": "slide-left 0.5s cubic-bezier(0.22,1,0.36,1)",
         "slide-right-100": "slideRight100 0.4s ease-out",
         "slide-left-100": "slideLeft100 0.5s ease-out",
