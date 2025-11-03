@@ -80,23 +80,27 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
   useEffect(() => {
     const canvas = canvasRef.current!;
     if (!canvas) return;
-
+  
     const ctx = canvas.getContext("2d")!;
-    const dpr = window.devicePixelRatio || 1; // Hi-DPI support
-    canvas.width = window.innerWidth * dpr;
-    canvas.height = window.innerHeight * dpr;
-    canvas.style.width = `${window.innerWidth}px`;
-    canvas.style.height = `${window.innerHeight}px`;
-
-    let darkCtx = ctx; // Reuse ctx, layer via globalAlpha for fade
-
+    
+    // Dynamic sizing: Match viewport + DPR for crispness (no shrink)
+    const setCanvasSize = () => {
+      const dpr = window.devicePixelRatio || 1; // Hi-DPI (re-calc on resize)
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      // Scale CSS to match (prevents blur)
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+    };
+    setCanvasSize(); // Initial set
+  
     // Set opacity directly (0.3 for light, 1 for dark)
-  canvas.style.opacity = darkMode ? "1" : "0.3";
-
+    canvas.style.opacity = darkMode ? "1" : "0.3";
+  
     const render = () => {
       // Clear and draw active video
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+  
       const activeVideo = darkMode ? darkVideoRef.current : lightVideoRef.current;
       if (activeVideo && !activeVideo.paused) {
         ctx.drawImage(activeVideo, 0, 0, canvas.width, canvas.height);
@@ -108,26 +112,26 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
       }
-
+  
       requestAnimationFrame(render);
     };
-    render();
-
+    render(); // Start loop after size/opacity set
+  
+    // Resize listener (re-calc DPR inside)
     const resize = () => {
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
+      setCanvasSize();
+      // Re-draw to new size
+      render();
     };
     window.addEventListener("resize", resize);
-
+  
     return () => {
       window.removeEventListener("resize", resize);
       darkVideoRef.current?.pause();
       lightVideoRef.current?.pause();
     };
   }, [darkMode]); // Dep: darkMode for redraw
-
+  
   // Smooth scroll handler (unchanged)
   const handleScroll = (id: string) => {
     const el = document.getElementById(id);
@@ -164,6 +168,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
       {/* Visible canvas background */}
       <canvas
         ref={canvasRef}
+    
         className={`absolute inset-0 w-full h-full object-cover`}
       />
 
