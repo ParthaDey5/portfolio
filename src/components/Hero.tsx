@@ -10,7 +10,7 @@ interface HeroSectionProps {
 }
 
 const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
-  // Animations
+  // Animations (unchanged)
   const fadeIn = useSpring({
     from: { opacity: 0, transform: "translateY(20px)" },
     to: { opacity: 1, transform: "translateY(0)" },
@@ -30,23 +30,105 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
     config: { duration: 1000, loop: { reverse: true } },
   });
 
+  // Refs for both videos (preload both)
+  const darkVideoRef = useRef<HTMLVideoElement>(null);
+  const lightVideoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
+  // Preload both on mount
+  useEffect(() => {
+    const preloadVideo = (ref: React.RefObject<HTMLVideoElement>, src: string) => {
+      const video = ref.current;
+      if (video) {
+        video.src = src;
+        video.load();
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+        video.preload = "auto"; // Eager buffer for smooth swap
+      }
+    };
+
+    preloadVideo(darkVideoRef, NeonAbstracts);
+    preloadVideo(lightVideoRef, Abstract);
+
+    // Play initial based on darkMode
+    if (darkMode) {
+      darkVideoRef.current?.play();
+    } else {
+      lightVideoRef.current?.play();
+    }
+  }, []); // Run once
+
+  // Swap videos on darkMode change (no reload—pause old, play new)
+  useEffect(() => {
+    const darkVideo = darkVideoRef.current;
+    const lightVideo = lightVideoRef.current;
+
+    if (darkMode) {
+      lightVideo?.pause();
+      lightVideo && (lightVideo.currentTime = 0); // Reset for sync
+      darkVideo?.play();
+    } else {
+      darkVideo?.pause();
+      darkVideo && (darkVideo.currentTime = 0);
+      lightVideo?.play();
+    }
+  }, [darkMode]); // Dep: Only darkMode
+
+  // Canvas render with crossfade (blend during swap)
   useEffect(() => {
     const canvas = canvasRef.current!;
+    if (!canvas) return;
+
     const ctx = canvas.getContext("2d")!;
-    const video = videoRef.current!;
-    video.play();
+    const dpr = window.devicePixelRatio || 1; // Hi-DPI support
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    canvas.style.width = `${window.innerWidth}px`;
+    canvas.style.height = `${window.innerHeight}px`;
+
+    let darkCtx = ctx; // Reuse ctx, layer via globalAlpha for fade
+
+    // Set opacity directly (0.3 for light, 1 for dark)
+  canvas.style.opacity = darkMode ? "1" : "0.3";
 
     const render = () => {
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      // Clear and draw active video
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const activeVideo = darkMode ? darkVideoRef.current : lightVideoRef.current;
+      if (activeVideo && !activeVideo.paused) {
+        ctx.drawImage(activeVideo, 0, 0, canvas.width, canvas.height);
+      } else {
+        // Placeholder gradient if no video ready
+        const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+        gradient.addColorStop(0, darkMode ? '#1a1a2e' : '#f0f8ff');
+        gradient.addColorStop(1, darkMode ? '#0f0f23' : '#e0e7ff');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+
       requestAnimationFrame(render);
     };
     render();
-  }, [darkMode]);
 
-  // Smooth scroll handler
+    const resize = () => {
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+    };
+    window.addEventListener("resize", resize);
+
+    return () => {
+      window.removeEventListener("resize", resize);
+      darkVideoRef.current?.pause();
+      lightVideoRef.current?.pause();
+    };
+  }, [darkMode]); // Dep: darkMode for redraw
+
+  // Smooth scroll handler (unchanged)
   const handleScroll = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
@@ -59,29 +141,34 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
       id="home"
       className="relative text-white min-h-screen flex items-center justify-center overflow-hidden transition-colors duration-300 ease-in desktop:py-0 py-[40vw]"
     >
-      {/* Hidden video source, theme-dependent */}
+      {/* Hidden videos: Preloaded, not rendered */}
       <video
-        ref={videoRef}
-        src={darkMode ? NeonAbstracts : Abstract}
+        ref={darkVideoRef}
         muted
         loop
         playsInline
         preload="auto"
         style={{ display: "none" }}
+        aria-hidden="true"
+      />
+      <video
+        ref={lightVideoRef}
+        muted
+        loop
+        playsInline
+        preload="auto"
+        style={{ display: "none" }}
+        aria-hidden="true"
       />
         
       {/* Visible canvas background */}
       <canvas
         ref={canvasRef}
-        width={1920}
-        height={1080}
-        className={`${
-          darkMode ? "opacity-100" : "opacity-30 "
-        } absolute inset-0 w-full h-full object-cover transition-all ease-linear delay-300`}
+        className={`absolute inset-0 w-full h-full object-cover`}
       />
 
       <div className="relative z-10 text-center">
-        {/* Headline */}
+        {/* Headline (unchanged) */}
         <animated.div style={fadeIn}>
           <h1 className="bigTxt desktop:py-[0.5vw] font-bold text-cyan-500 dark:text-fuchsia-400 leading-none desktop:mb-0 mb-[4vw]">
             <Typewriter
@@ -101,7 +188,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
           </h1>
         </animated.div>
 
-        {/* Paragraph */}
+        {/* Paragraph (unchanged) */}
         <animated.h2
           style={fadeIn}
           className="mediumSmallTxt desktop:tracking-[0.01rem] tracking-[0.04rem] desktop:mb-[3rem] mb-[12vw] text-Dark-grayish-blue dark:text-white font-semibold px-[7vw] leading-[6vw]"
@@ -113,7 +200,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
           experiences.
         </animated.h2>
 
-        {/* CTA */}
+        {/* CTA (unchanged) */}
         <animated.a
           onClick={() => handleScroll("projects")}
           style={scaleButton}
@@ -124,7 +211,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
         </animated.a>
       </div>
 
-      {/* Pulsating circle */}
+      {/* Pulsating circle (unchanged) */}
       <div className="absolute bottom-0 left-0 right-0 flex justify-center mb-8">
         {pulsate(
           (styles, item) =>

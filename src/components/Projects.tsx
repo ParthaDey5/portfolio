@@ -183,7 +183,7 @@ const Projects: React.FC = () => {
     const el = carouselRef.current;
     if (!el) return;
   
-    console.log('Carousel init: clientWidth=', el.clientWidth, 'scrollWidth=', el.scrollWidth);
+    
   
     const children = Array.from(el.children).filter(
       (child) => child instanceof HTMLElement
@@ -231,7 +231,7 @@ const Projects: React.FC = () => {
       const tolerance = Math.min(150, el.clientWidth * 0.15); // Bumped to eat 50px + gaps
       const currentLeft = el.scrollLeft;
   
-      console.log('Update: scrollLeft=', currentLeft, 'maxScroll=', maxScroll, 'tolerance=', tolerance);
+      
   
       const prevDisabled = currentLeft <= tolerance;
       const nextDisabled = currentLeft >= (maxScroll - tolerance);
@@ -239,7 +239,7 @@ const Projects: React.FC = () => {
       if (prevBtnRef.current) {
         prevBtnRef.current.disabled = prevDisabled;
         prevBtnRef.current.setAttribute('aria-disabled', prevDisabled ? 'true' : 'false');
-        console.log('Prev disabled:', prevDisabled);
+        
         if (prevDisabled && document.activeElement === prevBtnRef.current) {
           (prevBtnRef.current as HTMLElement).blur();
         }
@@ -248,7 +248,7 @@ const Projects: React.FC = () => {
       if (nextBtnRef.current) {
         nextBtnRef.current.disabled = nextDisabled;
         nextBtnRef.current.setAttribute('aria-disabled', nextDisabled ? 'true' : 'false');
-        console.log('Next disabled:', nextDisabled);
+        
         if (nextDisabled && document.activeElement === nextBtnRef.current) {
           (nextBtnRef.current as HTMLElement).blur();
         }
@@ -290,7 +290,7 @@ const Projects: React.FC = () => {
     // Ruthless init reset: Force 0 after micro-delay (beats CSS reflow)
     setTimeout(() => {
       el.scrollTo({ left: 0, behavior: 'instant' });
-      console.log('Post-settle force scrollLeft=0');
+      
       updateActive();
       updateButtons();
     }, 50); // 50ms for DOM settle
