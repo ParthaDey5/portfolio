@@ -37,7 +37,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
 
   // Preload both on mount
   useEffect(() => {
-    const preloadVideo = (ref: React.RefObject<HTMLVideoElement>, src: string) => {
+    const preloadVideo = (ref: React.RefObject<HTMLVideoElement | null>, src: string) => {
       const video = ref.current;
       if (video) {
         video.src = src;
