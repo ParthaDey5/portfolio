@@ -49,8 +49,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
       }
     };
     
-    preloadVideo(lightVideoRef, "/video/Abstract.mp4");
-    preloadVideo(darkVideoRef, "/video/NeonAbstracts4.mp4");
+    preloadVideo(lightVideoRef, "/video/abstract.mp4");
+    preloadVideo(darkVideoRef, "/video/NeonAbstracts.mp4");
 
 
     // Play initial based on darkMode
