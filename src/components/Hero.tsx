@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
 import Typewriter from "typewriter-effect";
 import { useSpring, animated, useTransition } from "@react-spring/web";
-import NeonAbstracts from "/video/NeonAbstracts4.mp4";
-import Abstract from "/video/Abstract.mp4";
+
+
 
 // Define props interface
 interface HeroSectionProps {
@@ -49,8 +49,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
       }
     };
 
-    preloadVideo(darkVideoRef, NeonAbstracts);
-    preloadVideo(lightVideoRef, Abstract);
+    preloadVideo(darkVideoRef, "/video/NeonAbstracts4.mp4");
+    preloadVideo(lightVideoRef, "/video/Abstract.mp4");
 
     // Play initial based on darkMode
     if (darkMode) {
