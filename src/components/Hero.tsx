@@ -48,9 +48,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({ darkMode }) => {
         video.preload = "auto"; // Eager buffer for smooth swap
       }
     };
-
-    preloadVideo(darkVideoRef, "/video/NeonAbstracts4.mp4");
+    
     preloadVideo(lightVideoRef, "/video/Abstract.mp4");
+    preloadVideo(darkVideoRef, "/video/NeonAbstracts4.mp4");
+
 
     // Play initial based on darkMode
     if (darkMode) {
