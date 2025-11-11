@@ -85,7 +85,7 @@ const Navbar: React.FC = () => {
           </ul>
           <IconClose
             onClick={() => setNavMenu(!navMenu)}
-            className="dark:text-Pale-orange text-Black75 w-[3.5vw] aspect-square"
+            className="cursor-pointer2 dark:text-Pale-orange text-Black75 w-[3.5vw] aspect-square"
           />
         </section>
       </div>
